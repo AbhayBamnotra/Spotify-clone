@@ -120,10 +120,12 @@
 
 
 }
-.card:hover{
+
+.card:hover {
     background-color: rgb(94, 94, 94);
     cursor: pointer;
 }
+
 .card>* {
     padding-top: 3px;
 
@@ -182,7 +184,8 @@
 }
 
 .play-pause {
-    position: absolute;
+    position: fixed;
+    bottom: 20px;
     width: 70vw;
     background-color: black;
     opacity: 0.8;
@@ -236,7 +239,8 @@
 .song-name .info {
     font-size: 12px;
 }
-.info div{
+
+.info div {
     word-break: break-all;
 }
 
@@ -292,11 +296,13 @@
     justify-content: space-between;
     margin: 10px 0px;
 }
-.volume img{
+
+.volume img {
     position: absolute;
     bottom: 28px;
 }
-.range input{
+
+.range input {
     position: absolute;
     right: 369px;
     bottom: 34px;
@@ -316,14 +322,18 @@
         padding: 0;
 
     }
+
     .volume img {
         position: absolute;
         bottom: 41px;
         right: 85px;
     }
-    .card:hover{
+
+    .card:hover {
         background-color: black;
-        cursor: pointer;}
+        cursor: pointer;
+    }
+
     .right {
         width: 100vw;
         height: 100vw;
@@ -341,9 +351,10 @@
         position: absolute;
         bottom: 20px;
     }
-.songinfo{
-    width: auto;
-}
+
+    .songinfo {
+        width: auto;
+    }
 
 
 
@@ -383,12 +394,12 @@
         gap: 5px;
         position: sticky;
     }
+
     .range input {
         position: absolute;
         right: 0px;
         bottom: 47px;
         width: 87px;
     }
-   
-}
 
+}
