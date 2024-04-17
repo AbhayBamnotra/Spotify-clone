@@ -22,7 +22,6 @@ async function getSongs(folder) {
     currFolder= folder;
     let a = await fetch(`http://127.0.0.1:5500/${folder}/`)
     let response = await a.text();
-    console.log(response)
     let div = document.createElement("div")
     div.innerHTML = response;
     let as = div.getElementsByTagName("a")
@@ -34,8 +33,9 @@ async function getSongs(folder) {
         }
 
     }
-    
+   
     // show all the songs
+    displayAlbums()
 
     let songUL = document.querySelector(".song-name").getElementsByTagName("ul")[0]
     songUL.innerHTML=""
@@ -84,10 +84,50 @@ const playmusic = (track, pause = false) => {
 
 
 }
+
+async function displayAlbums(){
+    let a = await fetch (`http://127.0.0.1:5500/songs/`)
+    let response = await a.text();
+    let div = document.createElement("div")
+    div.innerHTML = response;
+    let anchros= div.getElementsByTagName("a")
+    let cardContainer = document.querySelector(".cardContainer")
+   Array.from(anchros).forEach( async e=> {
+    if(e.href.includes("/songs")){
+        let folder=e.href.split("/").slice(-2)[0]
+        // get the meta data of the folder
+            let a = await fetch(`http://127.0.0.1:5500/songs/${folder}/info.json`)
+        let response = await a.json();
+        
+        cardContainer.innerHTML=cardContainer.innerHTML+     
+        `<div data-folder="ADS" class="card ">
+            <div class="play">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" id="Play" fill="#000">
+                    <path fill="none" d="M0 0h48v48H0z" fill="000"></path>
+                    <path
+                        d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm-4 29V15l12 9-12 9z"
+                        fill="#34a853" class="color000000 svgShape"></path>
+                </svg>
+            </div>
+
+            <img  src="/songs/${folder}/cover.jpg" alt=""
+            <h2>${response.title}</h2>
+            <p>${response.description}</p>
+        </div>`
+        
+    }
+   })
+        
+            
+    }
+    
 async function main() {
     // get the lists of all thwe song
 await getSongs("songs/ADS")
     playmusic(songs[0], true)
+
+// display all the albums dynamicly
+   displayAlbums()
 
 
 
