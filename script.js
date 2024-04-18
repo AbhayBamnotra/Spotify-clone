@@ -34,8 +34,7 @@ async function getSongs(folder) {
 
     }
    
-    // show all the songs
-    displayAlbums()
+
 
     let songUL = document.querySelector(".song-name").getElementsByTagName("ul")[0]
     songUL.innerHTML=""
@@ -95,10 +94,27 @@ async function displayAlbums(){
    Array.from(anchros).forEach( async e=> {
     if(e.href.includes("/songs")){
         let folder=e.href.split("/").slice(-2)[0]
-        // get the meta data of the folder
-            let a = await fetch(`http://127.0.0.1:5500/songs/${folder}/info.json`)
+       // get the meta data of the folder
+// <<<<<<<<<<<<<<  ✨ Codeium Command 🌟 >>>>>>>>>>>>>>>>
+      try {
+        let a = await fetch(`http://127.0.0.1:5500/songs/${folder}/info.json`, {
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          }
+        });
+        if (!a.ok) {
+          throw new Error(`Network response was not ok. Status: ${a.status}`);
+        }
         let response = await a.json();
-        
+      } catch (error) {
+        console.error(`Error: ${error.message} while fetching json for album ${folder}`);
+        return;
+      }
+
+      //let a = await fetch(`http://127.0.0.1:5500/songs/${folder}/info.json`)
+     //let response = await a.json();
+// <<<<<<<  a0630e62-5661-4c73-bc2d-b52cfcfa0d2b  >>>>>>>
         cardContainer.innerHTML=cardContainer.innerHTML+     
         `<div data-folder="ADS" class="card ">
             <div class="play">
@@ -120,14 +136,16 @@ async function displayAlbums(){
         
             
     }
-    
+
+
+
 async function main() {
     // get the lists of all thwe song
 await getSongs("songs/ADS")
     playmusic(songs[0], true)
 
 // display all the albums dynamicly
-   displayAlbums()
+displayAlbums()
 
 
 
