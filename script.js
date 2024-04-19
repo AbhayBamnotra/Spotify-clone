@@ -95,26 +95,9 @@ async function displayAlbums(){
     if(e.href.includes("/songs")){
         let folder=e.href.split("/").slice(-2)[0]
        // get the meta data of the folder
-// <<<<<<<<<<<<<<  ✨ Codeium Command 🌟 >>>>>>>>>>>>>>>>
-      try {
-        let a = await fetch(`http://127.0.0.1:5500/songs/${folder}/info.json`, {
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-          }
-        });
-        if (!a.ok) {
-          throw new Error(`Network response was not ok. Status: ${a.status}`);
-        }
-        let response = await a.json();
-      } catch (error) {
-        console.error(`Error: ${error.message} while fetching json for album ${folder}`);
-        return;
-      }
+          let a = await fetch (`http://127.0.0.1:5500/Spotify colne/songs/${folder}/info.json`); 
+           let response = await a.json();
 
-      //let a = await fetch(`http://127.0.0.1:5500/songs/${folder}/info.json`)
-     //let response = await a.json();
-// <<<<<<<  a0630e62-5661-4c73-bc2d-b52cfcfa0d2b  >>>>>>>
         cardContainer.innerHTML=cardContainer.innerHTML+     
         `<div data-folder="ADS" class="card ">
             <div class="play">
@@ -133,7 +116,14 @@ async function displayAlbums(){
         
     }
    })
+   Array.from(document.getElementsByClassName("card")).forEach(e=>{
+    console.log(e)
+    e.addEventListener("click" ,async item=>{
+        songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
         
+
+    })
+ })
             
     }
 
@@ -212,14 +202,7 @@ displayAlbums()
             currentsong.volume = parseInt(e.target.value) / 100
         })
  // load albums on click
- Array.from(document.getElementsByClassName("card")).forEach(e=>{
-    console.log(e)
-    e.addEventListener("click" ,async item=>{
-        songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
-        
 
-    })
- })
 
 
 }
