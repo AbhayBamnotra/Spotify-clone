@@ -300,6 +300,7 @@
 .volume img {
     position: absolute;
     bottom: 28px;
+    cursor: pointer;
 }
 
 .range input {
@@ -309,6 +310,9 @@
     width: 116px;
 
 
+}
+.range input{
+    cursor: pointer;
 }
 
 @media(max-width: 1400px) {

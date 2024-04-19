@@ -56,13 +56,11 @@ async function getSongs(folder) {
 
 
     audio.addEventListener("loadeddata", () => {
-        console.log(audio.duration, audio.currentSrc, audio.currentTime)
     });
 
     // attach a event listner to each song
     Array.from(document.querySelector(".song-name").getElementsByTagName("li")).forEach(e => {
         e.addEventListener("click", element => {
-            console.log(e.querySelector(".info").firstElementChild.innerHTML)
             playmusic(e.querySelector(".info").firstElementChild.innerHTML.trim())
         })
 
@@ -95,11 +93,11 @@ async function displayAlbums(){
     if(e.href.includes("/songs")){
         let folder=e.href.split("/").slice(-2)[0]
        // get the meta data of the folder
-          let a = await fetch (`http://127.0.0.1:5500/Spotify colne/songs/${folder}/info.json`); 
+          let a = await fetch (`http://127.0.0.1:5500/songs/${folder}/info.json`); 
            let response = await a.json();
 
         cardContainer.innerHTML=cardContainer.innerHTML+     
-        `<div data-folder="ADS" class="card ">
+        `<div data-folder="$(folder)" class="card ">
             <div class="play">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" id="Play" fill="#000">
                     <path fill="none" d="M0 0h48v48H0z" fill="000"></path>
@@ -117,7 +115,7 @@ async function displayAlbums(){
     }
    })
    Array.from(document.getElementsByClassName("card")).forEach(e=>{
-    console.log(e)
+    
     e.addEventListener("click" ,async item=>{
         songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
         
@@ -156,7 +154,6 @@ displayAlbums()
     })
     //LISTEN FOR TIMEUPDATE EVENT
     currentsong.addEventListener("timeupdate", () => {
-        console.log(currentsong.currentTime, currentsong.duration);
         document.querySelector(".songtime").innerHTML = `${secondsToMinutesSeconds(currentsong.currentTime)
             }/${secondsToMinutesSeconds(currentsong.duration)}`
         document.querySelector(".circle").style.left = (currentsong.currentTime / currentsong.duration) * 100 + "%";
@@ -201,7 +198,22 @@ displayAlbums()
         (e) => {
             currentsong.volume = parseInt(e.target.value) / 100
         })
- // load albums on click
+ // Add a event listener for mute
+ document.querySelector(".volume>img").addEventListener("click" ,e=>{
+   
+    if (e.target.src.includes("volume.svg")){
+    e.target.src =e.target.src.replace("volume.svg","mute.svg")
+    currentsong.volume=.10;
+    document.querySelector(".range").getElementsByTagName("input")[0].value=10;
+
+      }
+    else{
+    e.target.src =e.target.src.replace("mute.svg","volume.svg")
+currentsong.volume=0;
+document.querySelector(".range").getElementsByTagName("input")[0].value=0;
+
+}
+ })
 
 
 
