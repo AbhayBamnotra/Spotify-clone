@@ -405,5 +405,9 @@
         bottom: 47px;
         width: 87px;
     }
+    cardcontainer {
+      
+        max-height: 50vh;
+    }
 
 }
