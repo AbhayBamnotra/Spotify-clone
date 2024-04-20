@@ -43,7 +43,7 @@ async function getSongs(folder) {
                         <img class="invert" src="music.svg" alt="">
                        <div class="info">
                         <div>${song.replaceAll("%20", " ")}</div>
-                       <div>Arjan dhillon</div>
+                     <div></div>
                     </div>
                      <div class="playnow">
                     <h3>Play now</h3>
@@ -115,7 +115,6 @@ async function displayAlbums(){
     }
    })
    Array.from(document.getElementsByClassName("card")).forEach(e=>{
-    
     e.addEventListener("click" ,async item=>{
         songs = await getSongs(`songs/${item.currentTarget.dataset.folder}`)
         
